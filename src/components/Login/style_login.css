@@ -96,7 +96,11 @@ form.sign-in-form {
   font-size: 1.1rem;
   color: #333;
 }
-
+.input-field button {
+  position: absolute;
+  right: 0px;
+  height: 30px;
+}
 .input-field input::placeholder {
   color: #aaa;
   font-weight: 500;

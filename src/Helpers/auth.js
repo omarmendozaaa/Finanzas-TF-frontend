@@ -2,42 +2,26 @@ import Axios from 'axios';
 
 const TOKEN_KEY = 'WALLETBULLET_TOKEN';
 
-export function setToken(token){
+export function setToken(token) {
     localStorage.setItem(TOKEN_KEY, token);
 }
 
-export function getToken(){
+export function getToken() {
     return localStorage.getItem(TOKEN_KEY);
 }
 
-export function deleteToken(){
+export function deleteToken() {
     localStorage.removeItem(TOKEN_KEY);
 }
 
-export function initAxiosInterceptors(){
-    Axios.interceptors.request.use(function(config){
+export function initAxiosInterceptors() {
+    Axios.interceptors.request.use(function (config) {
         const token = getToken();
 
-        if(token){
+        if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            config.timeout = 5000;
         }
-
         return config;
     });
-
-    Axios.interceptors.response.use(
-        function (response){
-            return response;
-        },
-        function (error){
-            if(error.response === 401){
-                deleteToken();
-                window.location = '/login'
-            } else{
-                return Promise.reject(error);
-            }
-        }
-
-    );
-
 }
