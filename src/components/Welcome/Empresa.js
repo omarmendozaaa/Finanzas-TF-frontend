@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Log from "./../../img/welcome.svg";
 import axios from "axios";
 import { initAxiosInterceptors } from "../../Helpers/auth";
@@ -27,23 +27,20 @@ function Empresa(props) {
   };
   const history = useHistory();
 
-  useEffect(() => {
-    async function getempresabyuser() {
-      await axios
-        .get("https://localhost:5001/api/Empresas/byuser")
-        .then((res) => {
-          if (res.status === 204) {
-            history.push("./welcome");
-          } else {
-            history.push("./dashboard");
-          }
-        })
-        .catch((erorr) => {
-          console.log(console.error());
-        });
-    }
-    getempresabyuser();
-  }, [history]);
+  async function getempresabyuser() {
+    await axios
+      .get("https://localhost:5001/api/Empresas/byuser")
+      .then((res) => {
+        if (res.status === 204) {
+          history.push("./welcome");
+        } else {
+          history.push("./dashboard");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   async function llenarempresa() {
     await fetch(`${url}${ruc}?token=${token}`)
@@ -64,6 +61,7 @@ function Empresa(props) {
       .post("https://localhost:5001/api/Empresas", datita)
       .then((res) => {
         console.log(res);
+        getempresabyuser();
       });
   }
 

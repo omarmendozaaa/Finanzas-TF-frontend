@@ -2,12 +2,9 @@ import Register from "./../../img/register.svg";
 import Log from "./../../img/log.svg";
 import "./style_login.css";
 import axios from "axios";
-import {
-  initAxiosInterceptors,
-  setToken,
-} from "../../Helpers/auth";
-import { useEffect, useState } from "react";
+import { initAxiosInterceptors, setToken } from "../../Helpers/auth";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 initAxiosInterceptors();
 function Login() {
@@ -26,36 +23,34 @@ function Login() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    async function getempresabyuser() {
-      await axios
-        .get("https://localhost:5001/api/Empresas/byuser")
-        .then((res) => {
-          if (res.status === 204) {
-            history.push("./welcome");
-          } else {
-            history.push("./dashboard");
-          }
-        })
-        .catch((erorr) => {
-          console.log(console.error());
-        });
-    }
-    getempresabyuser();
-  }, [history]);
-
+  async function getempresabyuser() {
+    await axios
+      .get("https://localhost:5001/api/Empresas/byuser")
+      .then((res) => {
+        if (res.status === 204) {
+          history.push("./welcome");
+        } else {
+          history.push("./dashboard");
+        }
+      })
+      .catch((erorr) => {
+        console.log(console.error());
+      });
+  }
   async function login() {
-    const { data } = await axios.post(
+    await axios.post(
       "https://localhost:5001/CuentasControllers/Login",
       {
         email,
         password,
       }
-    );
-    setToken(data.token);
+    ).then((res)=>{
+      setToken(res.data.token);
+      getempresabyuser();
+    });
   }
   async function singup() {
-    const { data } = await axios.post(
+    await axios.post(
       "https://localhost:5001/CuentasControllers/Singin",
       {
         email,
@@ -63,8 +58,10 @@ function Login() {
         firstname,
         lastname,
       }
-    );
-    setToken(data.token);
+    ).then((res)=>{
+      setToken(res.data.token);
+      getempresabyuser();
+    });
   }
 
   return (
