@@ -21,6 +21,7 @@ export function initAxiosInterceptors() {
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
             config.timeout = 5000;
+            //encontré en un blog el agregarun timeout a mi consulta, pero nada :C
         }
         return config;
     });

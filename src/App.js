@@ -16,7 +16,7 @@ function App() {
             <Empresa/>
           </Router>
           <Router exact path= "/dashboard">
-            <h1>PINGA2</h1>
+            <h1>PINGA</h1>
           </Router>
         </Switch>
       </Router>

@@ -3,8 +3,6 @@ import Log from "./../../img/log.svg";
 import "./style_login.css";
 import axios from "axios";
 import {
-  deleteToken,
-  getToken,
   initAxiosInterceptors,
   setToken,
 } from "../../Helpers/auth";
@@ -20,37 +18,31 @@ function Login() {
   const loginview = () => {
     setChangeview("container");
   };
-  // eslint-disable-next-line
-  const [usuario, setUser] = useState(null);
-  // eslint-disable-next-line
-  const [empresa, setEmpresa] = useState(null);
-  // eslint-disable-next-line
-  const [cargandousuario, setCargandousuario] = useState(true);
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+
   const history = useHistory();
 
   useEffect(() => {
-    async function cargarusuario() {
-      if (!getToken()) {
-        setCargandousuario(false);
-        return;
-      }
-      try {
-        const { data: usuario } = await axios.get(
-          "https://localhost:5001/CuentasControllers/getuser"
-        );
-
-        setUser(usuario);
-        setCargandousuario(false);
-      } catch (error) {
-        console.log(error);
-      }
+    async function getempresabyuser() {
+      await axios
+        .get("https://localhost:5001/api/Empresas/byuser")
+        .then((res) => {
+          if (res.status === 204) {
+            history.push("./welcome");
+          } else {
+            history.push("./dashboard");
+          }
+        })
+        .catch((erorr) => {
+          console.log(console.error());
+        });
     }
-    cargarusuario()
-  }, []);
+    getempresabyuser();
+  }, [history]);
 
   async function login() {
     const { data } = await axios.post(
@@ -63,14 +55,14 @@ function Login() {
     setToken(data.token);
   }
   async function singup() {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       "https://localhost:5001/CuentasControllers/Singin",
       {
         email,
         password,
         firstname,
         lastname,
-        }
+      }
     );
     setToken(data.token);
   }

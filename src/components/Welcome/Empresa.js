@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Log from "./../../img/welcome.svg";
 import axios from "axios";
 import { initAxiosInterceptors } from "../../Helpers/auth";
 import { useHistory } from "react-router";
+
 function Empresa(props) {
   const [ruc, setRuc] = useState(String);
   const [razonSocial, setRazonSocial] = useState(String);
@@ -25,7 +26,25 @@ function Empresa(props) {
     logo: null,
   };
   const history = useHistory();
-  // eslint-disable-next-line
+
+  useEffect(() => {
+    async function getempresabyuser() {
+      await axios
+        .get("https://localhost:5001/api/Empresas/byuser")
+        .then((res) => {
+          if (res.status === 204) {
+            history.push("./welcome");
+          } else {
+            history.push("./dashboard");
+          }
+        })
+        .catch((erorr) => {
+          console.log(console.error());
+        });
+    }
+    getempresabyuser();
+  }, [history]);
+
   async function llenarempresa() {
     await fetch(`${url}${ruc}?token=${token}`)
       .then((res) => res.json())
@@ -38,7 +57,7 @@ function Empresa(props) {
         setDireccion(data.direccion === null ? "" : data.direccion);
       });
   }
-  
+
   async function crearempresa() {
     initAxiosInterceptors();
     await axios
