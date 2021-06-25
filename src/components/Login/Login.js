@@ -3,8 +3,8 @@ import Log from "./../../img/log.svg";
 import "./style_login.css";
 import axios from "axios";
 import { initAxiosInterceptors, setToken } from "../../Helpers/auth";
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 
 initAxiosInterceptors();
 function Login() {
@@ -27,41 +27,37 @@ function Login() {
     await axios
       .get("https://localhost:5001/api/Empresas/byuser")
       .then((res) => {
-        if (res.status === 204) {
-          history.push("./welcome");
-        } else {
-          history.push("./dashboard");
-        }
+        res.status === 204
+          ? history.push("/welcome")
+          : history.push("/dashboard");
       })
       .catch((erorr) => {
         console.log(console.error());
       });
   }
   async function login() {
-    await axios.post(
-      "https://localhost:5001/CuentasControllers/Login",
-      {
+    await axios
+      .post("https://localhost:5001/CuentasControllers/Login", {
         email,
         password,
-      }
-    ).then((res)=>{
-      setToken(res.data.token);
-      getempresabyuser();
-    });
+      })
+      .then((res) => {
+        setToken(res.data.token);
+        getempresabyuser();
+      });
   }
   async function singup() {
-    await axios.post(
-      "https://localhost:5001/CuentasControllers/Singin",
-      {
+    await axios
+      .post("https://localhost:5001/CuentasControllers/Singin", {
         email,
         password,
         firstname,
         lastname,
-      }
-    ).then((res)=>{
-      setToken(res.data.token);
-      getempresabyuser();
-    });
+      })
+      .then((res) => {
+        setToken(res.data.token);
+        history.push("/welcome");
+      });
   }
 
   return (

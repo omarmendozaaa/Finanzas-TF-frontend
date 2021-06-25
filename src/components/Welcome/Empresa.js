@@ -31,11 +31,9 @@ function Empresa(props) {
     await axios
       .get("https://localhost:5001/api/Empresas/byuser")
       .then((res) => {
-        if (res.status === 204) {
-          history.push("./welcome");
-        } else {
-          history.push("./dashboard");
-        }
+        res.status === 204
+          ? history.push("/welcome")
+          : history.push("/dashboard");
       })
       .catch((error) => {
         console.log(error);

@@ -12,10 +12,10 @@ function App() {
           <Router exact path="/">
             <Login />
           </Router>
-          <Router exact path="/welcome">
-            <Empresa/>
+          <Router  path="/welcome">
+            <Empresa />
           </Router>
-          <Router exact path= "/dashboard">
+          <Router  path="/dashboard">
             <h1>PINGA</h1>
           </Router>
         </Switch>
