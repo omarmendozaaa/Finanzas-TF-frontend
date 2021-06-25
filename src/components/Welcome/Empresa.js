@@ -1,7 +1,6 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Log from "./../../img/welcome.svg";
 import axios from "axios";
-import { initAxiosInterceptors } from "../../Helpers/auth";
 import { useHistory } from "react-router";
 
 function Empresa(props) {
@@ -25,6 +24,7 @@ function Empresa(props) {
     direccion,
     logo: null,
   };
+
   const history = useHistory();
 
   async function getempresabyuser() {
@@ -56,7 +56,6 @@ function Empresa(props) {
   }
 
   async function crearempresa() {
-    initAxiosInterceptors();
     await axios
       .post("https://localhost:5001/api/Empresas", datita)
       .then((res) => {
@@ -75,6 +74,7 @@ function Empresa(props) {
               <i className="fas fa-barcode"></i>
               <input
                 name="ruc"
+                value={ruc}
                 placeholder="RUC"
                 onChange={(e) => {
                   setRuc(e.target.value);
