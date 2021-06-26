@@ -1,6 +1,6 @@
 import "./App.css";
 import Login from "./components/Login/Login.js";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { componentDidMount } from "./components/app";
 import {
   deleteToken,
@@ -20,32 +20,31 @@ initAxiosInterceptors();
 function App() {
   componentDidMount();
   const [user, setUser] = useState(null);
-  const [empresastatus, setEmpresastatus] = useState(null);
+  const [empresastatus, setEmpresaStatus] = useState(null);
   const [loadingUser, setLoadingUser] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function loaduser() {
-      if (!getToken()) {
-        setLoadingUser(false);
-        console.log("no hay token");
-        return;
-      }
-      try {
-        const { data } = await axios.get(
-          "https://localhost:5001/CuentasControllers/getuser"
-        );
-        const { status } = await axios.get(
-          "https://localhost:5001/api/Empresas/byuser"
-        );
-        setUser(data);
-        setEmpresastatus(status);
-        console.log(status);
-        setLoadingUser(false);
-      } catch (error) {
-        console.log(error);
-      }
+  async function loaduser() {
+    if (!getToken()) {
+      setLoadingUser(false);
+      console.log("no hay token");
+      return;
     }
+    try {
+      const { data } = await axios.get(
+        "https://localhost:5001/CuentasControllers/getuser"
+      );
+      const { status } = await axios.get(
+        "https://localhost:5001/api/Empresas/byuser"
+      );
+      setUser(data);
+      setEmpresaStatus(status);
+      setLoadingUser(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
     loaduser();
   }, []);
 
@@ -55,7 +54,7 @@ function App() {
       { email, password }
     );
     setToken(data.token);
-    empresastatus === 200? <Redirect to="/"/> :<Redirect to="welcome"/>
+    loaduser();
   }
 
   async function singup(user) {
@@ -64,10 +63,17 @@ function App() {
       user
     );
     setToken(data.token);
-    console.log(data);
-    empresastatus === 200? <Redirect to="/"/> :<Redirect to="welcome"/>
+    loaduser();
   }
 
+  async function crearempresa(empresa) {
+    const { data } = await axios.post(
+      "https://localhost:5001/api/Empresas",
+      empresa
+    );
+    console.log(data);
+    loaduser();
+  }
   function showError(message) {
     setError(message);
   }
@@ -94,27 +100,40 @@ function App() {
       )}
     </Router>
   );
+
   function LoginRoutes({ showError, user, logout }) {
     return (
-      <Switch>
-        <Route
-          path="/welcome"
-          render={(props) => (
-            <Welcome {...props} showError={showError} user={user} />
-          )}
-        />
-        <Route
-          default
-          render={(props) => (
-            <Dashboard
-              {...props}
-              showError={showError}
-              user={user}
-              logout={logout}
-            />
-          )}
-        />
-      </Switch>
+      <div>
+        {empresastatus === 204 ? (
+          <Switch>
+            <Route
+              default
+              render={(props) => (
+                <Welcome
+                  {...props}
+                  showError={showError}
+                  user={user}
+                  crearempresa={crearempresa}
+                />
+              )}
+            ></Route>
+          </Switch>
+        ) : (
+          <Switch>
+            <Route
+              default
+              render={(props) => (
+                <Dashboard
+                  {...props}
+                  showError={showError}
+                  user={user}
+                  logout={logout}
+                />
+              )}
+            ></Route>
+          </Switch>
+        )}
+      </div>
     );
   }
   function LogoutRoutes({ login, singup, showError }) {

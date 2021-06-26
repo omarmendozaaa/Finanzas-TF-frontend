@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Log from "./../../img/welcome.svg";
-import axios from "axios";
 
-function Welcome({ showError, user }) {
+function Welcome({ showError, user, crearempresa }) {
   const [empresa, setEmpresa] = useState({
     ruc: "",
     razonSocial: "",
@@ -31,10 +30,6 @@ function Welcome({ showError, user }) {
         });
       });
   }
-
-  async function crearempresa() {
-    await axios.post("https://localhost:5001/api/Empresas", empresa);
-  }
   function handleInputChange(e) {
     llenarempresa();
     setEmpresa({
@@ -42,12 +37,21 @@ function Welcome({ showError, user }) {
       [e.target.name]: e.target.value,
     });
   }
+  async function handleInputEmpresa(e) {
+    e.preventDefault();
 
+    try {
+      await crearempresa(empresa);
+    } catch (error) {
+      showError(error);
+      console.log(error);
+    }
+  }
   return (
     <div className="container">
       <div className="forms-container">
         <div className="signin-signup">
-          <form action="#" className="sign-in-form" onSubmit={crearempresa}>
+          <form action="#" className="sign-in-form" onSubmit={handleInputEmpresa}>
             <h2 className="title">Tu empresa</h2>
             <div className="input-field">
               <i className="fas fa-barcode"></i>
