@@ -1,138 +1,116 @@
 import React, { useState } from "react";
 import Log from "./../../img/welcome.svg";
 import axios from "axios";
-import { useHistory } from "react-router";
 
-function Empresa(props) {
-  const [ruc, setRuc] = useState(String);
-  const [razonSocial, setRazonSocial] = useState(String);
-  const [estado, setEstado] = useState(String);
-  const [departamento, setDepartamento] = useState(String);
-  const [provincia, setProvincia] = useState(String);
-  const [distrito, setDistrito] = useState(String);
-  const [direccion, setDireccion] = useState(String);
+function Welcome({ showError, user }) {
+  const [empresa, setEmpresa] = useState({
+    ruc: "",
+    razonSocial: "",
+    estado: "",
+    departamento: "",
+    provincia: "",
+    distrito: "",
+    direccion: "",
+    logo: null,
+  });
   const url = "https://dniruc.apisperu.com/api/v1/ruc/";
   const token =
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1lbmRvemF2YWxsZWpvc29tYXJAZ21haWwuY29tIn0.jzc4vUiz49EMl0PrN5kNAqx7RjiJTsbUySMDtZ64FxQ";
-  const datita = {
-    ruc,
-    razonSocial,
-    estado,
-    departamento,
-    provincia,
-    distrito,
-    direccion,
-    logo: null,
-  };
-
-  const history = useHistory();
-
-  async function getempresabyuser() {
-    await axios
-      .get("https://localhost:5001/api/Empresas/byuser")
-      .then((res) => {
-        res.status === 204
-          ? history.push("/welcome")
-          : history.push("/dashboard");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   async function llenarempresa() {
-    await fetch(`${url}${ruc}?token=${token}`)
+    await fetch(`${url}${empresa.ruc}?token=${token}`)
       .then((res) => res.json())
       .then((data) => {
-        setRazonSocial(data.razonSocial);
-        setEstado(data.estado);
-        setDepartamento(data.departamento === null ? "" : data.departamento);
-        setProvincia(data.provincia === null ? "" : data.provincia);
-        setDistrito(data.distrito === null ? "" : data.distrito);
-        setDireccion(data.direccion === null ? "" : data.direccion);
+        setEmpresa({
+          razonSocial: data.razonSocial,
+          estado: data.estado,
+          departamento: data.departamento === null ? "" : data.departamento,
+          provincia: data.provincia === null ? "" : data.provincia,
+          distrito: data.distrito === null ? "" : data.distrito,
+          direccion: data.direccion === null ? "" : data.direccion,
+        });
       });
   }
 
   async function crearempresa() {
-    await axios
-      .post("https://localhost:5001/api/Empresas", datita)
-      .then((res) => {
-        console.log(res);
-        getempresabyuser();
-      });
+    await axios.post("https://localhost:5001/api/Empresas", empresa);
+  }
+  function handleInputChange(e) {
+    llenarempresa();
+    setEmpresa({
+      ...empresa,
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
     <div className="container">
       <div className="forms-container">
         <div className="signin-signup">
-          <form action="#" className="sign-in-form">
+          <form action="#" className="sign-in-form" onSubmit={crearempresa}>
             <h2 className="title">Tu empresa</h2>
             <div className="input-field">
               <i className="fas fa-barcode"></i>
               <input
                 name="ruc"
-                value={ruc}
+                value={empresa.ruc}
                 placeholder="RUC"
-                onChange={(e) => {
-                  setRuc(e.target.value);
-                }}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-field">
               <i className="fas fa-signature"></i>
               <input
-                value={razonSocial}
+                value={empresa.razonSocial}
                 placeholder="Razon Social"
                 name="razonSocial"
-                onClick={llenarempresa}
-                onChange={(e) => setRazonSocial(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-field">
               <i className="fas fa-location-arrow"></i>
               <input
-                value={departamento}
+                value={empresa.departamento}
                 name="departamento"
                 placeholder="Departamento"
-                onChange={(e) => setDepartamento(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-field">
               <i className="fas fa-location-arrow"></i>
               <input
-                value={provincia}
+                value={empresa.provincia}
                 name="provincia"
                 placeholder="Provincia"
-                onChange={(e) => setProvincia(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-field">
               <i className="fas fa-location-arrow"></i>
               <input
-                value={distrito}
+                value={empresa.distrito}
                 placeholder="Distrito"
                 name="distrito"
-                onChange={(e) => setDistrito(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
             <div className="input-field">
               <i className="fas fa-location-arrow"></i>
               <input
-                value={direccion}
+                value={empresa.direccion}
                 name="direccion"
                 placeholder="Dirección de la empresa"
-                onChange={(e) => setDireccion(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
-            <input type="submit" className="btn solid" onClick={crearempresa} />
+            <input type="submit" className="btn solid" />
           </form>
         </div>
       </div>
       <div className="panels-container">
         <div className="panel left-panel">
           <div className="content">
-            <h1>Bienvenido</h1>
+            <h1>Bienvenido {user.firstname}</h1>
             <p>
               Nosotros nos encargaremos de la administración de tu cartera de
               descuentos. Necesitaremos datos sobre tu empresa para comenzar. Si
@@ -148,4 +126,4 @@ function Empresa(props) {
   );
 }
 
-export default Empresa;
+export default Welcome;

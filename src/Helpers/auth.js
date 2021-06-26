@@ -15,14 +15,25 @@ export function deleteToken() {
 }
 
 export function initAxiosInterceptors() {
-    Axios.interceptors.request.use(function (config) {
-        const token = getToken();
-
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-            config.timeout = 5000;
-            //encontré en un blog el agregarun timeout a mi consulta, pero nada :C
-        }
-        return config;
+    Axios.interceptors.request.use(config => {
+      const token = getToken();
+  
+      if (token) {
+        config.headers.Authorization = `bearer ${token}`;
+      }
+  
+      return config;
     });
-}
+  
+    Axios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response.status === 401) {
+          deleteToken();
+          window.location = '/login';
+        } else {
+          return Promise.reject(error);
+        }
+      }
+    )
+  }

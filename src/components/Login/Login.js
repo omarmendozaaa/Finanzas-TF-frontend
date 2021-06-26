@@ -1,13 +1,9 @@
 import Register from "./../../img/register.svg";
 import Log from "./../../img/log.svg";
 import "./style_login.css";
-import axios from "axios";
-import { initAxiosInterceptors, setToken } from "../../Helpers/auth";
 import { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
 
-initAxiosInterceptors();
-function Login() {
+function Login({ login, singup, showError }) {
   const [changeview, setChangeview] = useState("container");
   const registerview = () => {
     setChangeview("container sign-up-mode");
@@ -15,63 +11,67 @@ function Login() {
   const loginview = () => {
     setChangeview("container");
   };
+  //LOGIN ------------------------------------------------------------------
+  const [emailAndPass, setEmailAndPass] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-
-  const history = useHistory();
-
-  async function getempresabyuser() {
-    await axios
-      .get("https://localhost:5001/api/Empresas/byuser")
-      .then((res) => {
-        res.status === 204
-          ? history.push("/welcome")
-          : history.push("/dashboard");
-      })
-      .catch((erorr) => {
-        console.log(console.error());
-      });
+  function handleInputChange(e) {
+    setEmailAndPass({
+      ...emailAndPass,
+      [e.target.name]: e.target.value,
+    });
   }
-  async function login() {
-    await axios
-      .post("https://localhost:5001/CuentasControllers/Login", {
-        email,
-        password,
-      })
-      .then((res) => {
-        setToken(res.data.token);
-        getempresabyuser();
-      });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await login(emailAndPass.email, emailAndPass.password);
+    } catch (error) {
+      showError(error);
+      console.log(error);
+    }
   }
-  async function singup() {
-    await axios
-      .post("https://localhost:5001/CuentasControllers/Singin", {
-        email,
-        password,
-        firstname,
-        lastname,
-      })
-      .then((res) => {
-        setToken(res.data.token);
-        history.push("/welcome");
-      });
+  //SINGUP----------------------------------------------------------------------
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  });
+  function handleInputChangeSing(e) {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  }
+  async function handleInputSing(e) {
+    e.preventDefault();
+
+    try {
+      await singup(user);
+    } catch (error) {
+      showError(error);
+      console.log(error);
+    }
   }
 
   return (
     <div className={changeview}>
       <div className="forms-container">
         <div className="signin-signup">
-          <form action="#" className="sign-in-form">
+          <form action="#" className="sign-in-form" onSubmit={handleSubmit}>
             <h2 className="title">En dónde nos quedamos?</h2>
             <div className="input-field">
               <i className="fas fa-envelope"></i>
               <input
                 type="email"
                 placeholder="Correo electrónico"
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                required
+                onChange={handleInputChange}
+                value={emailAndPass.email}
               />
             </div>
             <div className="input-field">
@@ -79,24 +79,25 @@ function Login() {
               <input
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                required
+                onChange={handleInputChange}
+                value={emailAndPass.password}
               />
             </div>
-            <input
-              onClick={login}
-              type="submit"
-              value="Iniciar Sesión"
-              className="btn solid"
-            />
+            <input type="submit" value="Iniciar Sesión" className="btn solid" />
           </form>
-          <form action="#" className="sign-up-form">
+          <form action="#" className="sign-up-form" onSubmit={handleInputSing}>
             <h2 className="title">Registrate</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
               <input
                 type="text"
                 placeholder="Nombres"
-                onChange={(e) => setFirstname(e.target.value)}
+                name = "firstname"
+                // required
+                onChange={handleInputChangeSing}
+                value={user.firstname}
               />
             </div>
             <div className="input-field">
@@ -104,7 +105,10 @@ function Login() {
               <input
                 type="text"
                 placeholder="Apellidos"
-                onChange={(e) => setLastname(e.target.value)}
+                name = "lastname"
+                // required
+                onChange={handleInputChangeSing}
+                value={user.lastname}
               />
             </div>
             <div className="input-field">
@@ -112,7 +116,10 @@ function Login() {
               <input
                 type="email"
                 placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
+                name = "email"
+                // required
+                onChange={handleInputChangeSing}
+                value={user.email}
               />
             </div>
             <div className="input-field">
@@ -120,11 +127,13 @@ function Login() {
               <input
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                name = "password"
+                // required
+                onChange={handleInputChangeSing}
+                value={user.password}
               />
             </div>
             <input
-              onClick={singup}
               type="submit"
               className="btn"
               value="Regístrate"
