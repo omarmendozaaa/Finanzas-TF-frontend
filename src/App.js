@@ -140,7 +140,8 @@ function App() {
     return (
       <Switch>
         <Route
-          path="/login"
+          // path="/login"
+          default
           render={(props) => (
             <Login
               {...props}
@@ -150,9 +151,10 @@ function App() {
             />
           )}
         />
-        <Route default>
+        {/* POSIBLE LANDING PAGE */}
+        {/* <Route default>
           <h1>LANDINGPAGE</h1>
-        </Route>
+        </Route> */}
       </Switch>
     );
   }

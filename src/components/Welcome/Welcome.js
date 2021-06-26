@@ -68,6 +68,7 @@ function Welcome({ showError, user, crearempresa }) {
                 value={empresa.razonSocial}
                 placeholder="Razon Social"
                 name="razonSocial"
+                onClick={llenarempresa}
                 onChange={handleInputChange}
               />
             </div>
