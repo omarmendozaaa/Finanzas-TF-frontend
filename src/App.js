@@ -31,10 +31,11 @@ function App() {
         return;
       }
       try {
-        const { data: usuario } = await axios.get(
+        const { data } = await axios.get(
           "https://localhost:5001/CuentasControllers/getuser"
         );
-        setUser(usuario);
+        console.log(data)
+        setUser(data);
         setLoadingUser(false);
       } catch (error) {
         console.log(error);
@@ -48,8 +49,6 @@ function App() {
       "https://localhost:5001/CuentasControllers/Login",
       { email, password }
     );
-
-    setUser(data.usuario);
     setToken(data.token);
   }
 
@@ -58,7 +57,6 @@ function App() {
       "https://localhost:5001/CuentasControllers/Singin",
       user
     );
-    setUser(data.usuario);
     setToken(data.token);
     console.log(data);
   }
@@ -93,6 +91,7 @@ function App() {
   function LoginRoutes({ showError, user, logout }) {
     return (
       <Switch>
+        {console.log(user)}
         <Route
           path="/welcome"
           render={(props) => (

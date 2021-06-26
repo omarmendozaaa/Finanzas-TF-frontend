@@ -110,7 +110,7 @@ function Welcome({ showError, user }) {
       <div className="panels-container">
         <div className="panel left-panel">
           <div className="content">
-            <h1>Bienvenido {user.firstname}</h1>
+            <h1>Bienvenido {user.firstName}</h1>
             <p>
               Nosotros nos encargaremos de la administración de tu cartera de
               descuentos. Necesitaremos datos sobre tu empresa para comenzar. Si
