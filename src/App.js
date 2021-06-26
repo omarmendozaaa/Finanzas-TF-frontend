@@ -1,6 +1,6 @@
 import "./App.css";
 import Login from "./components/Login/Login.js";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { componentDidMount } from "./components/app";
 import {
   deleteToken,
@@ -13,13 +13,14 @@ import Welcome from "./components/Welcome/Welcome";
 import axios from "axios";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Error from "./components/Error/Error";
-import Loading from "./components/Loading"
+import Loading from "./components/Loading";
 
 initAxiosInterceptors();
 
 function App() {
   componentDidMount();
   const [user, setUser] = useState(null);
+  const [empresastatus, setEmpresastatus] = useState(null);
   const [loadingUser, setLoadingUser] = useState(null);
   const [error, setError] = useState(null);
 
@@ -34,8 +35,12 @@ function App() {
         const { data } = await axios.get(
           "https://localhost:5001/CuentasControllers/getuser"
         );
-        console.log(data)
+        const { status } = await axios.get(
+          "https://localhost:5001/api/Empresas/byuser"
+        );
         setUser(data);
+        setEmpresastatus(status);
+        console.log(status);
         setLoadingUser(false);
       } catch (error) {
         console.log(error);
@@ -50,6 +55,7 @@ function App() {
       { email, password }
     );
     setToken(data.token);
+    empresastatus === 200? <Redirect to="/"/> :<Redirect to="welcome"/>
   }
 
   async function singup(user) {
@@ -59,6 +65,7 @@ function App() {
     );
     setToken(data.token);
     console.log(data);
+    empresastatus === 200? <Redirect to="/"/> :<Redirect to="welcome"/>
   }
 
   function showError(message) {
@@ -87,11 +94,9 @@ function App() {
       )}
     </Router>
   );
-
   function LoginRoutes({ showError, user, logout }) {
     return (
       <Switch>
-        {console.log(user)}
         <Route
           path="/welcome"
           render={(props) => (
@@ -99,7 +104,7 @@ function App() {
           )}
         />
         <Route
-          path="/dashboard"
+          default
           render={(props) => (
             <Dashboard
               {...props}
@@ -126,6 +131,9 @@ function App() {
             />
           )}
         />
+        <Route default>
+          <h1>LANDINGPAGE</h1>
+        </Route>
       </Switch>
     );
   }
