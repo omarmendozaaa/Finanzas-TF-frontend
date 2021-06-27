@@ -14,14 +14,14 @@ import axios from "axios";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Error from "./components/Error/Error";
 import Loading from "./components/Loading";
-
+import Factura from "./components/Factura/Factura"
 initAxiosInterceptors();
 
 function App() {
   componentDidMount();
   const [user, setUser] = useState(null);
   const [empresastatus, setEmpresaStatus] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
   const [error, setError] = useState(null);
 
   async function loaduser() {
@@ -121,6 +121,10 @@ function App() {
         ) : (
           <Switch>
             <Route
+            path="/facturas"
+            render={(props)=>(<Factura {...props}/>)}>
+            </Route>
+            <Route
               default
               render={(props) => (
                 <Dashboard
@@ -131,6 +135,7 @@ function App() {
                 />
               )}
             ></Route>
+
           </Switch>
         )}
       </div>
@@ -140,7 +145,6 @@ function App() {
     return (
       <Switch>
         <Route
-          // path="/login"
           default
           render={(props) => (
             <Login

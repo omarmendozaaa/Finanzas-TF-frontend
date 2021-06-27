@@ -1,8 +1,7 @@
 import Register from "./../../img/register.svg";
 import Log from "./../../img/log.svg";
-import "./style_login.css";
 import { useState } from "react";
-
+import "./../../assets/css/style_login.css"
 function Login({ login, singup, showError }) {
   const [changeview, setChangeview] = useState("container");
   const registerview = () => {
