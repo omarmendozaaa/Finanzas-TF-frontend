@@ -20,7 +20,7 @@ function Header({ logout, showError }) {
       <div className="logout">
         <button className="button-logout" onClick={handleInputChange}>
           <i
-            style={{ fontSize: "25px", color: "#777777" }}
+            style={{ fontSize: "25px", color: "gray" }}
             className="fas fa-arrow-down"
           />
         </button>

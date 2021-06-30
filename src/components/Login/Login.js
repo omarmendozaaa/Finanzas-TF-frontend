@@ -84,7 +84,7 @@ function Login({ login, singup, showError }) {
                 value={emailAndPass.password}
               />
             </div>
-            <input type="submit" value="Iniciar Sesión" className="btn solid" />
+            <input type="submit" value="Iniciar Sesión" className="btnnnnn solid" />
           </form>
           <form action="#" className="sign-up-form" onSubmit={handleInputSing}>
             <h2 className="title">Registrate</h2>
@@ -134,7 +134,7 @@ function Login({ login, singup, showError }) {
             </div>
             <input
               type="submit"
-              className="btn"
+              className="btnnnnn"
               value="Regístrate"
             />
           </form>
@@ -150,8 +150,8 @@ function Login({ login, singup, showError }) {
               descuentos.
             </p>
             <button
-              className="btn transparent"
-              id="sign-up-btn"
+              className="btnnnnn transparent"
+              id="sign-up-btnnnnn"
               onClick={registerview}
             >
               Regístrate
@@ -164,8 +164,8 @@ function Login({ login, singup, showError }) {
             <h3>¿Nos volvemos a encontrar?</h3>
             <p>Que dices si continuamos nuestro trabajo?</p>
             <button
-              className="btn transparent"
-              id="sign-in-btn"
+              className="btnnnnn transparent"
+              id="sign-in-btnnnnn"
               onClick={loginview}
             >
               Iniciar Sesion

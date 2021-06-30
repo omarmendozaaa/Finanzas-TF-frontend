@@ -1,0 +1,42 @@
+.btn-add {
+  width: 150px;
+  background-color: #481380;
+  border: none;
+  outline: none;
+  height: 40px;
+  border-radius: 10px;
+  color: #f5f5fb;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.btn-danger {
+  width: 150px;
+  background-color: #dc3545;
+  border: none;
+  outline: none;
+  height: 40px;
+  border-radius: 10px;
+  color: #f5f5fb;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.btn-success {
+  width: 150px;
+  background-color: #007bff;
+  border: none;
+  outline: none;
+  height: 40px;
+  border-radius: 10px;
+  color: #f5f5fb;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}

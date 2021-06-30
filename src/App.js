@@ -14,7 +14,11 @@ import axios from "axios";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Error from "./components/Error/Error";
 import Loading from "./components/Loading";
-import Factura from "./components/Factura/Factura"
+import Factura from "./components/Views/Factura"
+import Recibos from "./components/Views/Recibos"
+import Letras from "./components/Views/Letras"
+import Clientes from "./components/Views/Clientes"
+import Config from "./components/Views/Config"
 initAxiosInterceptors();
 
 function App() {
@@ -122,8 +126,25 @@ function App() {
           <Switch>
             <Route
             path="/facturas"
-            render={(props)=>(<Factura {...props}/>)}>
+            render={(props)=>(<Factura {...props} logout={logout} showError={showError} user={user}/>)}>
             </Route>
+            <Route
+            path="/letras"
+            render={(props)=>(<Recibos {...props} logout={logout} showError={showError} user={user}/>)}>
+            </Route>
+            <Route
+            path="/recibos"
+            render={(props)=>(<Letras {...props} logout={logout} showError={showError}  user={user} />)}>
+            </Route>
+            <Route
+            path="/clientes"
+            render={(props)=>(<Clientes {...props} logout={logout} showError={showError} user={user}/>)}>
+            </Route>
+            <Route
+            path="/config"
+            render={(props)=>(<Config {...props} logout={logout} showError={showError}  user={user}/>)}>
+            </Route>
+
             <Route
               default
               render={(props) => (

@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(-30deg, #eed0fa, #e7e2f8);
+  background: #e7e2f8;
 }
 .cont-dash {
   width: 100%;
@@ -42,7 +42,7 @@
   display: grid;
   grid-template-columns: 15% auto;
 }
-.container-body .sidebar {
+.container-body .sidebar-noreact {
   margin: 20px 0 20px 20px;
   background: rgba(255, 255, 255, 0.6);
   border-radius: 14px;
@@ -50,29 +50,27 @@
   position: relative;
   height: 96vh;
 }
-.container-body .sidebar ul li {
+.container-body .sidebar-noreact ul li {
   padding: 10px 10px;
   margin: 10px 0;
 }
-.container-body .sidebar ul li a {
+.container-body .sidebar-noreact ul li a {
   color: #a2a2c2;
-  text-transform: capitalize;
   font-weight: 400;
 }
-.container-body .sidebar ul li i {
+.container-body .sidebar-noreact ul li i {
   color: #a2a2c2;
   font-size: 18px;
 }
-.container-body .sidebar ul .dashboard {
-  background: #7f78d2;
+.container-body .sidebar-noreact ul .dashboard {
   border-radius: 8px;
   padding: 10px;
 }
-.container-body .sidebar ul .dashboard a {
-  color: white;
+.container-body .sidebar-noreact ul .dashboard a {
+  color: black;
 }
-.container-body .sidebar ul .dashboard i {
-  color: white;
+.container-body .sidebar-noreact ul .dashboard i {
+  color: #7f78d2;
 }
 
 .container-body .main-body .tittle {
@@ -89,4 +87,153 @@
 .container-body .main-body .tittle h2 {
   font-size: 25px;
   font-weight: normal;
+}
+.button-clients {
+  padding-left: 35px;
+}
+.ulsidebar {
+  padding-left: 0;
+}
+.table-clients {
+  padding-left: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.table-clients .table {
+  margin: 20px 0px 0px 0px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 75vh;
+  width: 60%;
+}
+.table-clients .table-top {
+  margin: 20px 20px 0px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 75vh;
+  width: 39%;
+}
+
+.table-facturas {
+  padding-left: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-facturas .table {
+  margin: 20px 0px 0px 0px;
+  border-radius: 14px;
+  position: relative;
+  height: 75vh;
+  width: 60%;
+}
+.table-facturas .table-top {
+  margin: 20px 20px 0px 20px;
+  border-radius: 14px;
+  position: relative;
+  height: 75vh;
+  width: 39%;
+}
+
+.table-facturas .table .table-data {
+  position: relative;
+  height: 33%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.table-facturas .table .table-costes-ini {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 33%;
+  width: 100%;
+}
+.table-facturas .table .table-costes-fin {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 29%;
+  width: 100%;
+}
+
+.table-facturas .table .table-data .table-1 {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 100%;
+  width: 49%;
+}
+.table-facturas .table .table-data .table-2 {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 100%;
+  width: 49%;
+}
+.table-facturas .table-top .table-analisis {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+
+  position: relative;
+  height: 33%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.table-facturas .table-top .table-form {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
+  height: 64.5%;
+  width: 100%;
+}
+
+.table-dashboard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-dashboard .dash-left {
+  margin: 15px 0px 0px 0px;
+  border-radius: 14px;
+  position: relative;
+  height: 80.5vh;
+  width: 70%;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.table-dashboard .dash-rigth {
+  margin-top: 15px;
+  margin-left: 20px;
+  border-radius: 14px;
+  position: relative;
+  height: 80.5vh;
+  width: 30%;
+}
+
+.table-dashboard .dash-rigth .chart-pie {
+  border-radius: 14px;
+  position: relative;
+  height: 50%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+}
+.table-dashboard .dash-rigth .chart-opera {
+  border-radius: 14px;
+  margin-top: 20px;
+  position: relative;
+  height: 47.5%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
 }
