@@ -129,11 +129,11 @@ function App() {
             render={(props)=>(<Factura {...props} logout={logout} showError={showError} user={user}/>)}>
             </Route>
             <Route
-            path="/letras"
+            path="/recibos"
             render={(props)=>(<Recibos {...props} logout={logout} showError={showError} user={user}/>)}>
             </Route>
             <Route
-            path="/recibos"
+            path="/letras"
             render={(props)=>(<Letras {...props} logout={logout} showError={showError}  user={user} />)}>
             </Route>
             <Route

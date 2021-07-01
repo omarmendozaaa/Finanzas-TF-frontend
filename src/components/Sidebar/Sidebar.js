@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { NavbarBrand  } from "reactstrap";
+import { NavbarBrand, Nav, NavItem } from "reactstrap";
 
 function Sidebar(props) {
   const location = useLocation();
+  // eslint-disable-next-line
   const [dashboard, setDashboard] = useState();
   const [facturas, setFacturas] = useState();
   const [letras, setLetras] = useState();
@@ -20,9 +21,9 @@ function Sidebar(props) {
     setConfig("");
     console.log(location.pathname)
     switch (location.pathname) {
-      case "/dashboard":
-        setDashboard("dashboard");
-        break;
+      // case "/dashboard":
+      //   setDashboard("dashboard");
+      //   break;
       case "/facturas":
         setFacturas("dashboard");
         break;
@@ -34,9 +35,6 @@ function Sidebar(props) {
         break;
       case "/clientes":
         setClientes("dashboard");
-        break;
-      case "/config":
-        setConfig("dashboard");
         break;
       default:
         setDashboard("");
@@ -50,27 +48,27 @@ function Sidebar(props) {
   }, [location]);
   return (
     <div className="sidebar-noreact">
-      <ul className="ulsidebar">
-        <li className={dashboard}>
+      <Nav vertical className="ulsidebar">
+        {/* <NavItem className={dashboard}>
           <i className="fas fa-home"></i> <NavbarBrand className="mr-auto" href="/dashboard">Dashboard</NavbarBrand >
-        </li>
-        <li className={facturas}>
+        </NavItem> */}
+        <NavItem className={facturas}>
           <i className="fas fa-folder"></i> <NavbarBrand href="/facturas">Facturas</NavbarBrand>
-        </li>
-        <li className={letras}>
+        </NavItem>
+        <NavItem className={letras}>
           <i className="fas fa-book"></i> <NavbarBrand href="/letras">Letras</NavbarBrand>
-        </li>
-        <li className={recibos}>
+        </NavItem>
+        <NavItem className={recibos}>
           <i className="fas fa-calendar"></i> <NavbarBrand href="/recibos">Recibos</NavbarBrand>
-        </li>
-        <li className={clientes}>
+        </NavItem>
+        <NavItem className={clientes}>
           <i className="fas fa-user-friends"></i>{" "}
           <NavbarBrand href="/clientes">Clientes</NavbarBrand>
-        </li>
-        <li className={config}>
-          <i className="fas fa-cog"></i> <NavbarBrand href="/config">Configuración</NavbarBrand>
-        </li>
-      </ul>
+        </NavItem>
+        <NavItem className={config}>
+          <i className="fas fa-cog"></i> <NavbarBrand href="https://omarmendozaaa.github.io/My-Site/">Configuración</NavbarBrand>
+        </NavItem>
+      </Nav>
     </div>
   );
 }

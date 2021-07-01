@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
-import { Button } from "reactstrap";
+import ClientesModal from "../FormsModal/ClientesModal";
+import ClientesTable from "../Tables/ClientesTable";
+import axios from "axios";
 function ClientesBody({ user, showError, logout }) {
+  // eslint-disable-next-line
+  const [clientes, setClientes] = useState([]);
+  async function getclientes() {
+    await axios
+      .get("https://localhost:5001/api/Clientes/byuser")
+      .then((res) => {
+        console.log(res.data);
+        setClientes(res.data);
+      });
+  }
+  useEffect(() => {
+    getclientes();
+  }, []);
   return (
     <div className="main-body">
       <Header showError={showError} logout={logout} />
@@ -10,10 +25,16 @@ function ClientesBody({ user, showError, logout }) {
         <h2>Mis Clientes</h2>
       </div>
       <div className="button-clients">
-        <Button color="primary"> Agregar Cliente </Button>
+        <ClientesModal color="primary" getclientes={getclientes}>
+          {" "}
+          Agregar Cliente{" "}
+        </ClientesModal>
       </div>
       <div className="table-clients">
-        <div className="table"></div>
+        <div className="table">
+          <h3>Clientes</h3>
+          <ClientesTable clientes={clientes} />
+        </div>
         <div className="table-top"></div>
       </div>
     </div>

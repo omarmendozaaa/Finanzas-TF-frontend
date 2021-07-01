@@ -90,6 +90,15 @@
 }
 .button-clients {
   padding-left: 35px;
+  display: flex;
+}
+.button-clients-2 {
+  padding-left: 10px;
+  display: flex;
+}
+.button-clients-3 {
+  padding-left: 10px;
+  display: flex;
 }
 .ulsidebar {
   padding-left: 0;
@@ -106,7 +115,9 @@
   border-radius: 14px;
   position: relative;
   height: 75vh;
-  width: 60%;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
 }
 .table-clients .table-top {
   margin: 20px 20px 0px 20px;
@@ -141,27 +152,66 @@
 
 .table-facturas .table .table-data {
   position: relative;
-  height: 33%;
+  height: 31.5%;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 .table-facturas .table .table-costes-ini {
   margin-top: 20px;
   background: rgba(255, 255, 255, 0.6);
   border-radius: 14px;
   position: relative;
+  height: 31.5%;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+}
+.two-columns {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  position: relative;
   height: 33%;
   width: 100%;
+  text-align: center;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.table-facturas .table .table-costes-ini .inputs {
+  width: 50%;
+  height: 280%;
+  padding-top: 0;
+}
+.table-facturas .table .table-costes-fin .inputs {
+  width: 50%;
+  height: 280%;
+  padding-top: 0;
+}
+.table-facturas .table .table-costes-ini .output {
+  position: relative;
+  width: 50%;
+  height: 250%;
+  border: rgb(209, 209, 209) 1px solid;
+  border-radius: 5px;
+}
+.table-facturas .table .table-costes-fin .output {
+  position: relative;
+  width: 50%;
+  height: 250%;
+  border: rgb(209, 209, 209) 1px solid;
+  border-radius: 5px;
 }
 .table-facturas .table .table-costes-fin {
   margin-top: 20px;
   background: rgba(255, 255, 255, 0.6);
   border-radius: 14px;
   position: relative;
-  height: 29%;
+  height: 31.5%;
   width: 100%;
+  text-align: center;
+  padding: 5px;
 }
 
 .table-facturas .table .table-data .table-1 {
@@ -170,6 +220,8 @@
   position: relative;
   height: 100%;
   width: 49%;
+  text-align: center;
+  padding: 5px;
 }
 .table-facturas .table .table-data .table-2 {
   background: rgba(255, 255, 255, 0.6);
@@ -177,25 +229,26 @@
   position: relative;
   height: 100%;
   width: 49%;
+  text-align: center;
+  padding: 5px;
 }
 .table-facturas .table-top .table-analisis {
   background: rgba(255, 255, 255, 0.6);
   border-radius: 14px;
-
   position: relative;
   height: 33%;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: center;
+  padding: 5px;
 }
 .table-facturas .table-top .table-form {
-  margin-top: 20px;
   background: rgba(255, 255, 255, 0.6);
   border-radius: 14px;
   position: relative;
-  height: 64.5%;
+  height: 99.5%;
   width: 100%;
+  text-align: center;
+  padding: 5px;
 }
 
 .table-dashboard {
@@ -236,4 +289,21 @@
   height: 47.5%;
   width: 100%;
   background: rgba(255, 255, 255, 0.6);
+}
+.table-data-cliente {
+  height: 100%;
+  width: 100%;
+}
+
+.input-data {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+.modal-centered {
+  text-align: center;
+}
+table {
+  width: 100%;
 }
