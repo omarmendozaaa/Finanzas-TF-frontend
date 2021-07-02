@@ -94,7 +94,7 @@ function Login({ login, singup, showError }) {
                 type="text"
                 placeholder="Nombres"
                 name = "firstname"
-                // required
+                required
                 onChange={handleInputChangeSing}
                 value={user.firstname}
               />
@@ -105,7 +105,7 @@ function Login({ login, singup, showError }) {
                 type="text"
                 placeholder="Apellidos"
                 name = "lastname"
-                // required
+                required
                 onChange={handleInputChangeSing}
                 value={user.lastname}
               />
@@ -116,7 +116,7 @@ function Login({ login, singup, showError }) {
                 type="email"
                 placeholder="Email"
                 name = "email"
-                // required
+                required
                 onChange={handleInputChangeSing}
                 value={user.email}
               />
@@ -127,7 +127,8 @@ function Login({ login, singup, showError }) {
                 type="password"
                 placeholder="Password"
                 name = "password"
-                // required
+                required
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}" title="La contraseña debe tener como mínimo 8 caracteres, una letra mayúscula , caractes especial y un número"
                 onChange={handleInputChangeSing}
                 value={user.password}
               />

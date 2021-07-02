@@ -17,7 +17,7 @@ import CostesIni from "../Costes/CostesIni";
 import CostesFin from "../Costes/CostesFin";
 function RecibosBody({ showError, logout, user }) {
   // eslint-disable-next-line
-  const [moneda, setMoneda] = useState("Soles");
+  const [isdolar, setIsdolar] = useState(false);
   //######################################## FACTURA DATOS  ###############################################################
   const [fecha_emision, setFecha_emision] = useState(Date);
   const [fecha_pago, setFecha_pago] = useState(Date);
@@ -27,7 +27,7 @@ function RecibosBody({ showError, logout, user }) {
   const carteraId = user.carteraId;
   //######################################## TASA DATOS  ##################################################################
   const [dias_ano, setDias_ano] = useState(360);
-  const [plazo_tasa, setPlazo_tasa] = useState();
+  const [plazo_tasa, setPlazo_tasa] = useState(360);
   const [tasa_efectiva, setTasa_efectiva] = useState();
   const [fecha_descuento, setFecha_descuento] = useState();
   //######################################## ANALISIS DATOS  ###############################################################
@@ -80,14 +80,14 @@ function RecibosBody({ showError, logout, user }) {
   const [facturas, setFacturas] = useState([]);
   //######################################## OTROS DATOS NECESARIOS ######################################################
   const columns = [
-    { field: "cliente.razonSocial", headerName: "Razon Social", width: 160 },
-    { field: "fecha_pago", headerName: "Fecha de Pago", width: 160 },
+    { field: "id", headerName: "ID", width: 100 },
+    { field: "fecha_pago", headerName: "Fecha de Pago", width: 180 },
     {
-      field: "analisis.valortotalentregar",
-      headerName: "Valor a Entregar",
-      width: 160,
+      field: "total_recibir",
+      headerName: "Total Recibir",
+      width: 180,
     },
-    { field: "analisis.tce_anual", headerName: "TCEA", width: 120 },
+    { field: "retencion", headerName: "Retencion", width: 120 },
   ];
   //######################################## DATOS ANALISISSSSSSSS #######################################################
   const datos4analisis = {
@@ -108,6 +108,9 @@ function RecibosBody({ showError, logout, user }) {
       .then((res) => {
         console.log(res.data);
         setClientes(res.data);
+        if(res.data[0] !== undefined){
+          setClienteid(res.data[0].id)
+        }
       });
   }
   async function getfacturas(id) {
@@ -152,6 +155,23 @@ function RecibosBody({ showError, logout, user }) {
           </FormGroup>
         </Col>
         <div className="button-clients-2">
+          <FormGroup>
+            <InputGroup size="sm">
+              <InputGroupAddon addonType="prepend">{isdolar?"$":"S/."}</InputGroupAddon>
+              <Input
+                required
+                type="select"
+                onChange={(e) => {
+                  setIsdolar(e.target.value==="Soles"?false:true);
+                }}
+              >
+                <option>Soles</option>
+                <option>Dolares</option>
+              </Input>
+            </InputGroup>
+          </FormGroup>
+        </div>
+        <div className="button-clients-2">
           <ClientesModal color="primary" getclientes={getclientes}>
             {" "}
             Agregar Cliente{" "}
@@ -161,11 +181,11 @@ function RecibosBody({ showError, logout, user }) {
           <FacturaModal
             datos4analisis={datos4analisis}
             tipo="Valor Nominal: "
-            moneda={moneda}
             cartera_tipo="Recibo"
             setAnalisis={setAnalisis}
             factura={factura}
             color="primary"
+            simbolo={isdolar?"$":"S/."}
           >
             {" "}
             Agregar Factura{" "}
@@ -252,14 +272,14 @@ function RecibosBody({ showError, logout, user }) {
                       setPlazo_tasa(e.target.value);
                     }}
                   >
-                    <option value="1">Diario</option>
-                    <option value="15">Quincenal</option>
-                    <option value="30">Mensual</option>
-                    <option value="60">Bimestral</option>
-                    <option value="90">Trimestral</option>
-                    <option value="120">Cuatrimestral</option>
-                    <option value="180">Semestral</option>
                     <option value="360">Anual</option>
+                    <option value="180">Semestral</option>
+                    <option value="120">Cuatrimestral</option>
+                    <option value="90">Trimestral</option>
+                    <option value="60">Bimestral</option>
+                    <option value="30">Mensual</option>
+                    <option value="15">Quincenal</option>
+                    <option value="1">Diario</option>
                   </Input>
                 </div>
                 <div className="input-data">

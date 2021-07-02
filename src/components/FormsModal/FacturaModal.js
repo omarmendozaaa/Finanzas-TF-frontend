@@ -6,6 +6,7 @@ import { calcular } from "../../Helpers/calc";
 function FacturaModal({
   datos4analisis,
   moneda,
+  simbolo,
   tipo,
   cartera_tipo,
   setAnalisis,
@@ -56,6 +57,7 @@ function FacturaModal({
     try{
       factura.fecha_emision = data.FechaEmision;
       factura.fecha_pago = data.FechaPago;
+      console.log(factura)
       await axios.post("https://localhost:5001/api/Letras",factura).then((res)=>{
         console.log(res.data)
       })
@@ -68,6 +70,7 @@ function FacturaModal({
     try{
       factura.fecha_emision = data.FechaEmision;
       factura.fecha_pago = data.FechaPago;
+      console.log(factura)
       await axios.post("https://localhost:5001/api/Recibos",factura).then((res)=>{
         console.log(res.data)
       })
@@ -111,23 +114,24 @@ function FacturaModal({
             <hr></hr>
             <p class="textMin">
               {tipo}
+              {simbolo}
               {data.ValorNominal}
             </p>
             <p class="textMin">
-              Costos y Gastos Iniciales: {data.CostoInicialTotal}
+              Costos y Gastos Iniciales: {simbolo}{data.CostoInicialTotal} 
             </p>
             <p class="textMin">
-              Costos y Gastos Finales: {data.CostoFinalTotal}
+              Costos y Gastos Finales: {simbolo}{data.CostoFinalTotal}
             </p>
             <hr></hr>
-            <p class="textMin">Plazo de Tasa: {data.PlazoDias} </p>
+            <p class="textMin">Traslado: {data.PlazoDias} días</p>
             <p class="textMin">Valor de Tasa: {data.ValorTasa}%</p>
             <hr></hr>
-            <p class="textMin">Descuento: {data.Descuento}</p>
-            <p class="textMin">Valor Neto: {data.ValorNeto} </p>
-            <p class="textMin">Valor Recibido: {data.ValorRecibido}</p>
-            <p class="textMin">Valor Entregado: {data.ValorEntregado}</p>
-            <p class="textMin">TCEA: {data.TCEA} %</p>
+            <p class="textMin">Descuento a {data.PlazoDias} días: {simbolo} {data.Descuento}</p>
+            <p class="textMin">Valor Neto: {simbolo}{data.ValorNeto} </p>
+            <p class="textMin">Valor Recibido: {simbolo}{data.ValorRecibido} </p>
+            <p class="textMin">Valor Entregado:  {simbolo}{data.ValorEntregado}</p>
+            <p class="textMin">TCEA: {data.TCEA}%</p>
             <br></br>
           </div>
         </ModalBody>

@@ -1,9 +1,9 @@
 export function calcular(datos4analisis, moneda) {
   console.log(datos4analisis);
   const calcdias = () => {
-    const fecha_emision = new Date(datos4analisis.fecha_emision);
     const fecha_pago = new Date(datos4analisis.fecha_pago);
-    return fecha_pago.getTime() - fecha_emision.getTime();
+    const fecha_descuento = new Date(datos4analisis.fecha_descuento);
+    return fecha_pago.getTime() - fecha_descuento.getTime();
   };
 
   const selectTipoMoneda = moneda;
@@ -41,7 +41,7 @@ export function calcular(datos4analisis, moneda) {
   valorRecibido = valorNeto - CGI - retencion; 
   valorEntregado = valorNominal + CGF - retencion; 
   
-  TCEA = (Math.pow((valorEntregado/valorRecibido), (datos4analisis.dias_ano/inpPlazoDias)) - 1) * 100
+  TCEA = (Math.pow((valorEntregado/valorRecibido), (datos4analisis.dias_ano/inpPlazoDias)) - 1)
 
   valorTasa = valorTasa.toFixed(6);
   valorNominal = valorNominal.toFixed(2);

@@ -16,8 +16,11 @@ import axios from "axios";
 import CostesIni from "../Costes/CostesIni";
 import CostesFin from "../Costes/CostesFin";
 function FacturasBody({ showError, logout, user }) {
+  //######################################## OBTENER DATOS ###############################################################
+  const [clientes, setClientes] = useState([]);
+  const [facturas, setFacturas] = useState([]);
   // eslint-disable-next-line
-  const [moneda, setMoneda] = useState("Soles");
+  const [isdolar, setIsdolar] = useState(false);
   //######################################## FACTURA DATOS  ###############################################################
   const [fecha_emision, setFecha_emision] = useState(Date);
   const [fecha_pago, setFecha_pago] = useState(Date);
@@ -28,7 +31,7 @@ function FacturasBody({ showError, logout, user }) {
   const carteraId = user.carteraId;
   //######################################## TASA DATOS  ##################################################################
   const [dias_ano, setDias_ano] = useState(360);
-  const [plazo_tasa, setPlazo_tasa] = useState();
+  const [plazo_tasa, setPlazo_tasa] = useState(360);
   const [tasa_efectiva, setTasa_efectiva] = useState();
   const [fecha_descuento, setFecha_descuento] = useState();
   //######################################## ANALISIS DATOS  ###############################################################
@@ -76,19 +79,16 @@ function FacturasBody({ showError, logout, user }) {
     analisis,
     costos_gastos,
   };
-  //######################################## OBTENER DATOS ###############################################################
-  const [clientes, setClientes] = useState([]);
-  const [facturas, setFacturas] = useState([]);
   //######################################## OTROS DATOS NECESARIOS ######################################################
   const columns = [
-    { field: "cliente.razonSocial", headerName: "Razon Social", width: 160 },
-    { field: "fecha_pago", headerName: "Fecha de Pago", width: 160 },
+    { field: "id", headerName: "ID", width: 100 },
+    { field: "fecha_pago", headerName: "Fecha de Pago", width: 180 },
     {
       field: "total_facturado",
-      headerName: "Total  ",
-      width: 160,
+      headerName: "Total Facturado",
+      width: 180,
     },
-    { field: "analisis.tce_anual", headerName: "TCEA", width: 120 },
+    { field: "retencion", headerName: "Retencion", width: 120 },
   ];
   //######################################## DATOS ANALISISSSSSSSS #######################################################
   const datos4analisis = {
@@ -109,6 +109,10 @@ function FacturasBody({ showError, logout, user }) {
       .then((res) => {
         console.log(res.data);
         setClientes(res.data);
+        console.log(res.data[0]);
+        if(res.data[0] !== undefined){
+          setClienteid(res.data[0].id)
+        }
       });
   }
   async function getfacturas(id) {
@@ -137,9 +141,11 @@ function FacturasBody({ showError, logout, user }) {
             <InputGroup size="sm">
               <InputGroupAddon addonType="prepend">@Cliente</InputGroupAddon>
               <Input
-                required
                 type="select"
                 onChange={(e) => {
+                  setClienteid(e.target.value);
+                }}
+                onClick={(e) => {
                   setClienteid(e.target.value);
                 }}
               >
@@ -154,23 +160,41 @@ function FacturasBody({ showError, logout, user }) {
           </FormGroup>
         </Col>
         <div className="button-clients-2">
+          <FormGroup>
+            <InputGroup size="sm">
+              <InputGroupAddon addonType="prepend">
+                {isdolar ? "$" : "S/."}
+              </InputGroupAddon>
+              <Input
+                required
+                type="select"
+                onChange={(e) => {
+                  setIsdolar(e.target.value === "Soles" ? false : true);
+                }}
+              >
+                <option>Soles</option>
+                <option>Dolares</option>
+              </Input>
+            </InputGroup>
+          </FormGroup>
+        </div>
+
+        <div className="button-clients-2">
           <ClientesModal color="primary" getclientes={getclientes}>
             {" "}
             Agregar Cliente{" "}
           </ClientesModal>
         </div>
         <div className="button-clients-3">
-          <FacturaModal 
+          <FacturaModal
             datos4analisis={datos4analisis}
             tipo="Total Facturado: "
-            moneda={moneda}
             cartera_tipo="Factura"
             setAnalisis={setAnalisis}
             factura={factura}
             color="primary"
+            simbolo={isdolar ? "$" : "S/."}
           >
-            {" "}
-            Agregar Factura{" "}
           </FacturaModal>
         </div>
       </div>
@@ -254,14 +278,14 @@ function FacturasBody({ showError, logout, user }) {
                       setPlazo_tasa(e.target.value);
                     }}
                   >
-                    <option value="1">Diario</option>
-                    <option value="15">Quincenal</option>
-                    <option value="30">Mensual</option>
-                    <option value="60">Bimestral</option>
-                    <option value="90">Trimestral</option>
-                    <option value="120">Cuatrimestral</option>
-                    <option value="180">Semestral</option>
                     <option value="360">Anual</option>
+                    <option value="180">Semestral</option>
+                    <option value="120">Cuatrimestral</option>
+                    <option value="90">Trimestral</option>
+                    <option value="60">Bimestral</option>
+                    <option value="30">Mensual</option>
+                    <option value="15">Quincenal</option>
+                    <option value="1">Diario</option>
                   </Input>
                 </div>
                 <div className="input-data">
