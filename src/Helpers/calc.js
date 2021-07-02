@@ -40,13 +40,8 @@ export function calcular(datos4analisis, moneda) {
   valorNeto = inpValorNominal - descuento; 
   valorRecibido = valorNeto - CGI - retencion; 
   valorEntregado = valorNominal + CGF - retencion; 
-  TCEA =
-    (Math.pow(
-      valorEntregado / valorRecibido,
-      datos4analisis.dias_ano / inpPlazoDias
-    ) -
-      1) *
-    100;
+  
+  TCEA = (Math.pow((valorEntregado/valorRecibido), (datos4analisis.dias_ano/inpPlazoDias)) - 1) * 100
 
   valorTasa = valorTasa.toFixed(6);
   valorNominal = valorNominal.toFixed(2);

@@ -70,6 +70,7 @@ function FacturasBody({ showError, logout, user }) {
     fecha_pago,
     total_facturado,
     retencion,
+    clienteid,
     carteraId,
     tasa,
     analisis,
@@ -83,8 +84,8 @@ function FacturasBody({ showError, logout, user }) {
     { field: "cliente.razonSocial", headerName: "Razon Social", width: 160 },
     { field: "fecha_pago", headerName: "Fecha de Pago", width: 160 },
     {
-      field: "analisis.valortotalentregar",
-      headerName: "Valor a Entregar",
+      field: "total_facturado",
+      headerName: "Total  ",
       width: 160,
     },
     { field: "analisis.tce_anual", headerName: "TCEA", width: 120 },
@@ -122,6 +123,7 @@ function FacturasBody({ showError, logout, user }) {
     getclientes();
     getfacturas(user.carteraId);
   }, [user.carteraId]);
+  console.log(clienteid)
   return (
     <div className="main-body">
       <Header showError={showError} logout={logout} />

@@ -41,8 +41,8 @@ function FacturaModal({
   }
   async function postfacturas() {
     try{
-      factura.fecha_emision = data.FechaEmision
-      factura.fecha_pago = data.FechaPago
+      factura.fecha_emision = data.FechaEmision;
+      factura.fecha_pago = data.FechaPago;
       console.log(factura)
       await axios.post("https://localhost:5001/api/Facturas",factura).then((res)=>{
         console.log(res.data)
@@ -54,6 +54,8 @@ function FacturaModal({
   }
   async function postletras() {
     try{
+      factura.fecha_emision = data.FechaEmision;
+      factura.fecha_pago = data.FechaPago;
       await axios.post("https://localhost:5001/api/Letras",factura).then((res)=>{
         console.log(res.data)
       })
@@ -64,6 +66,8 @@ function FacturaModal({
   }
   async function postrecibos() {
     try{
+      factura.fecha_emision = data.FechaEmision;
+      factura.fecha_pago = data.FechaPago;
       await axios.post("https://localhost:5001/api/Recibos",factura).then((res)=>{
         console.log(res.data)
       })
@@ -97,9 +101,9 @@ function FacturaModal({
         <ModalHeader>Resultado</ModalHeader>
         <ModalBody>
           <div className="modal-centered">
+            <h1 class="textMin"> Resumen: {cartera_tipo}</h1>
             <p>
-              <span class="textMin">Resumen en {moneda}</span>
-              <span class="textMin"></span>
+              <span class="textMin">{moneda}</span>
             </p>
             <hr></hr>
             <p class="textMin">Fecha Emision: {data.FechaEmision}</p>
@@ -117,8 +121,7 @@ function FacturaModal({
             </p>
             <hr></hr>
             <p class="textMin">Plazo de Tasa: {data.PlazoDias} </p>
-            <p class="textMin">Valor de Tasa: %</p>
-            <p class="textMin">Periodo de Capitalizacion: </p>
+            <p class="textMin">Valor de Tasa: {data.ValorTasa}%</p>
             <hr></hr>
             <p class="textMin">Descuento: {data.Descuento}</p>
             <p class="textMin">Valor Neto: {data.ValorNeto} </p>
